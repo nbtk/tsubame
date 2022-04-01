@@ -67,7 +67,7 @@ None
 # Example
 
 ## Simple traceroute command
-There is a simple traceroute code at the main block in the module. You can use as a command like this.
+There is a simple traceroute code at the main block in the module. You can use as a command as follows.
 ```
 $ sudo ./traceroute.py example.com
 traceroute to example.com (93.184.216.34), 32 hops max
