@@ -1,6 +1,6 @@
 # Overview
 
-This is traceroute module written in Python. The module sends speculative probe packets and gets results immediately. However, this module may send too many wasted packets. You should specify the minimum number of hops required to reach the target. The module currently supports only IPv4 ICMP Echo Request.
+This is a traceroute module written in Python. The module sends speculative probe packets and gets the results immediately. Currently, the module supports only IPv4 ICMP Echo Requests as probe packets.
 
 # Installation
 
@@ -8,7 +8,7 @@ No need to install. Just import the module.
 
 # Usage
 ## Permission
-You need super user permission or set CAP_NET_RAW capability to the Python binary.
+You need to have super user privileges or set CAP_NET_RAW capability to the Python interpreter binary.
 
 ## Programing Interface
 ```python
@@ -26,15 +26,15 @@ A target host name string or an IP address string.
 
 ### hop_limit
 
-Maximum number of hops. It must be 1 to 64 integer.  You should specify the minimum number of hops required to reach the target.
+Maximum number of hops. It must be an integer between 1 to 64.  You should specify the minimum number of hops required to reach the target.
 
 ### count
 
-Number of probe packets to each hop. It must be must be 1 to 4 integer.
+Number of probe packets to each hop. It must be an integer between 1 to 4.
 
 ### ident
 
-Identifier for parallel execution. When running in parallel, a unique value must be set in each context. It must be length 2 bytes array. If default or set None, uses PID.
+Identifier for parallel execution. For parallel execution, a unique value must be set in each context. It must be a bytes type value of size 2. If it is set None, the PID will be used.
 
 ## Result Structure
 
