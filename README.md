@@ -1,6 +1,6 @@
 # Overview
 
-This is a traceroute module written in Python. The module sends speculative probe packets and gets the results immediately. Currently, the module supports only IPv4 ICMP Echo Requests as probe packets.
+This is a traceroute module written in Python. The module sends speculative probe packets and gets the results immediately. Currently, it supports only IPv4 ICMP Echo Requests as probe packets.
 
 # Installation
 
