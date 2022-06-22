@@ -92,25 +92,24 @@ class traceroute:
                                   *self.__sk_args)[0][4][0]
         host_ip = ipaddress.ip_address(host)
         if not isinstance(hop_limit, int):
-            raise TypeError('hop_limit must be an int, ' +
-                            'but ' + type(hop_limit).__name__ + ' given')
+            raise TypeError('hop_limit must be int type but ' +
+                            type(hop_limit).__name__ + ' type was given')
         if hop_limit < 1 or hop_limit > 64:
-            raise ValueError('hop_limit must be 1 to 64 digits, ' +
-                             'but ' + hop_limit + ' given')
+            raise ValueError('hop_limit must be an int from 1 to 64 but ' +
+                             str(hop_limit) + ' was given')
         if not isinstance(count, int):
-            raise TypeError('count must be an int, ' +
-                            'but ' + type(count).__name__ + ' given')
+            raise TypeError('count must be int type but ' +
+                            type(count).__name__ + ' type was given')
         if count < 1 or count > 4:
-            raise ValueError('count must be 1 to 4 digits' +
-                             'but ' + count + ' given')
+            raise ValueError('count must be an int from 1 to 4 but ' +
+                             str(count) + ' was given')
         if ident == None:
             ident = (os.getpid() & 0xffff).to_bytes(2, 'big')
-        if not isinstance(ident, bytes):
-            raise TypeError('ident must be bytes, ' +
-                            'but ' + type(ident).__name__ + ' given')
+        if not (isinstance(ident, bytes) or isinstance(ident, bytearray)):
+            raise TypeError('ident must be bytes type or bytearray type but ' +
+                            type(ident).__name__ + ' type was given')
         if len(ident) != 2:
-            raise ValueError('ident must be 2 bytes, ' +
-                             'but ' + len(ident) + ' bytes given')
+            raise ValueError('ident size must be 2 bytes')
         recv_records = {} # resluts will be stored to this
         sk = socket.socket(*self.__sk_args)
         try:
