@@ -28,15 +28,15 @@ A target host name string or an IP address string.
 
 ### hop_limit
 
-Maximum number of hops. It must be an integer between 1 to 64.  You should specify the minimum number of hops required to reach the target.
+Maximum number of hops. It must be an integer from 1 to 64.
 
 ### count
 
-Number of probe packets to each hop. It must be an integer between 1 to 4.
+The number of probe packets for each hop. It must be an integer from 1 to 4.
 
 ### ident
 
-Identifier for parallel execution. For parallel execution, a unique value must be set in each context. It must be a bytes type value of size 2. If it is set None, the PID will be used.
+Identifier for parallel execution. The size must be 2 bytes. A unique value must be set for each traceroute context. By default, the PID will be set.
 
 ## Result Structure
 
@@ -69,7 +69,7 @@ None
 # Example
 
 ## Simple traceroute command
-There is a simple traceroute code at the main block in the module. You can use as a command as follows.
+You can use as a traceroute command as follows.
 ```
 $ sudo tsubame example.com
 traceroute to example.com (93.184.216.34), 32 hops max
