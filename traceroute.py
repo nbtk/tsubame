@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 __author__ = "NBTK"
-__copyright__ = "Copyright 2018, NBTK"
+__copyright__ = "Copyright 2022, NBTK"
 __license__ = "BSD-3-Clause"
 __version__ = "1.0"
 
@@ -19,7 +19,7 @@ class traceroute:
     __ICMP_ECHO_REQUEST = b'\x08\x00'
     __ICMP_TIME_EXCEEDED = b'\x0b\x00'
 
-    # icmp echo request will xmit with this message
+    # icmp echo requests will be xmited with this message
     __ECHO_MSG = b'underway on nuclear power'
 
     # icmp socket arguments
@@ -50,10 +50,10 @@ class traceroute:
             else:
                 continue
             if org_dst_ip != host_ip:
-                # this message is not to me
+                # the received message is not destined to me
                 continue
             if icmp_msg[4:6] != ident:
-                # the original message is sent by someone else
+                # the xmited message was sent by someone else
                 continue
             record = icmp_msg[6:8]
             recv_records[record] = (recv_timestamp,
@@ -82,7 +82,7 @@ class traceroute:
                 msg = self.__ICMP_ECHO_REQUEST + csum + msg
                 xmit_records.append((record, time.time()))
                 sk.sendto(msg, (host.__str__(), 33434))
-                # the port number 33434 does not affect.
+                # the port number 33434 has no particular meaning
         return xmit_records
 
 
@@ -92,25 +92,25 @@ class traceroute:
                                   *self.__sk_args)[0][4][0]
         host_ip = ipaddress.ip_address(host)
         if not isinstance(hop_limit, int):
-            raise TypeError('hop_limit must be int type but ' +
+            raise TypeError('the "hop_limit" argument must be int type but ' +
                             type(hop_limit).__name__ + ' type was given')
         if hop_limit < 1 or hop_limit > 64:
-            raise ValueError('hop_limit must be an int from 1 to 64 but ' +
+            raise ValueError('the "hop_limit" argument must be an int from 1 to 64 but ' +
                              str(hop_limit) + ' was given')
         if not isinstance(count, int):
-            raise TypeError('count must be int type but ' +
+            raise TypeError('the "count" argument must be int type but ' +
                             type(count).__name__ + ' type was given')
         if count < 1 or count > 4:
-            raise ValueError('count must be an int from 1 to 4 but ' +
+            raise ValueError('the "count" argument must be an int from 1 to 4 but ' +
                              str(count) + ' was given')
         if ident == None:
             ident = (os.getpid() & 0xffff).to_bytes(2, 'big')
         if not (isinstance(ident, bytes) or isinstance(ident, bytearray)):
-            raise TypeError('ident must be bytes type or bytearray type but ' +
+            raise TypeError('the "ident" argument must be bytes type or bytearray type but ' +
                             type(ident).__name__ + ' type was given')
         if len(ident) != 2:
-            raise ValueError('ident size must be 2 bytes')
-        recv_records = {} # resluts will be stored to this
+            raise ValueError('the size of "ident" argument must be 2 bytes')
+        recv_records = {} # the resluts will be stored to this map
         sk = socket.socket(*self.__sk_args)
         try:
             sk.settimeout(timeout)
