@@ -149,9 +149,9 @@ class traceroute:
         return results
 
 
-if __name__ == '__main__':
+def main():
     if len(sys.argv) != 2:
-        print('usage: %s example.com' % sys.argv[0],
+        print('usage: tsubame example.com' % sys.argv[0],
               file=sys.stderr)
         sys.exit(1)
     sk_args = (socket.AF_INET,
@@ -187,4 +187,8 @@ if __name__ == '__main__':
         print('')
         if reached == True:
             break
+
+
+if __name__ == '__main__':
+    main()
 

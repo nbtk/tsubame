@@ -1,10 +1,12 @@
 # Overview
 
-This is a traceroute module written in Python. The module sends speculative probe packets and gets the results immediately. Currently, it supports only IPv4 ICMP Echo Requests as probe packets.
+This is a traceroute module written in Python. The module sends speculative probe packets and gets the results immediately. Currently, only IPv4 ICMP echo requests are supported as probe packets.
 
 # Installation
 
-No need to install. Just import the module.
+```
+$ sudo pip install tsubame
+```
 
 # Usage
 ## Permission
@@ -12,7 +14,7 @@ You need to have super user privileges or set CAP_NET_RAW capability to the Pyth
 
 ## Programing Interface
 ```python
-from traceroute import traceroute
+from tsubame import traceroute
 
 host = 'example.com'
 tr = traceroute()
@@ -69,7 +71,7 @@ None
 ## Simple traceroute command
 There is a simple traceroute code at the main block in the module. You can use as a command as follows.
 ```
-$ sudo ./traceroute.py example.com
+$ sudo tsubame example.com
 traceroute to example.com (93.184.216.34), 32 hops max
 1  192.168.1.1  1.146 ms  1.374 ms  1.616 ms
 2  * * *
