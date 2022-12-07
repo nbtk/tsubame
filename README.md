@@ -1,3 +1,5 @@
+[![Downloads](https://static.pepy.tech/personalized-badge/tsubame?period=total&units=none&left_color=grey&right_color=blue&left_text=Downloads)](https://pepy.tech/project/tsubame)
+
 # Overview
 
 This is a traceroute module written in Python. The module sends speculative probe packets and gets the results immediately. Currently, only IPv4 ICMP echo requests are supported as probe packets.
