@@ -7,7 +7,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='tsubame',
-    version='0.8.1',
+    version='0.8.2',
     description='Quick Traceroute',
     long_description=long_description,
     long_description_content_type='text/markdown',
