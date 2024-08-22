@@ -27,7 +27,6 @@ class traceroute:
                  socket.SOCK_RAW,
                  socket.getprotobyname('icmp'))
 
-
     def __recv_probe(self, sk, host_ip, count, hop_limit, ident,
                      recv_records):
         for _ in range(count * hop_limit):
@@ -60,7 +59,6 @@ class traceroute:
                                     addr,
                                     reached)
 
-
     def __xmit_probe(self, sk, host, count, hop_limit, ident):
         xmit_records = []
         for ttl in range(1, hop_limit + 1):
@@ -85,7 +83,6 @@ class traceroute:
                 # the port number 33434 has no particular meaning
         return xmit_records
 
-
     def probe(self, host, hop_limit=8, count=1, timeout=1.0, ident=None):
         host = socket.getaddrinfo(host,
                                   None,
@@ -103,14 +100,14 @@ class traceroute:
         if count < 1 or count > 4:
             raise ValueError('the "count" argument must be an int from 1 to 4 but ' +
                              str(count) + ' was given')
-        if ident == None:
+        if ident is None:
             ident = (os.getpid() & 0xffff).to_bytes(2, 'big')
         if not (isinstance(ident, bytes) or isinstance(ident, bytearray)):
             raise TypeError('the "ident" argument must be bytes type or bytearray type but ' +
                             type(ident).__name__ + ' type was given')
         if len(ident) != 2:
             raise ValueError('the size of "ident" argument must be 2 bytes')
-        recv_records = {} # the resluts will be stored to this map
+        recv_records = {}  # the resluts will be stored to this map
         sk = socket.socket(*self.__sk_args)
         try:
             sk.settimeout(timeout)
@@ -151,20 +148,28 @@ class traceroute:
 
 def main():
     if len(sys.argv) != 2:
-        print('usage: tsubame example.com' % sys.argv[0],
-              file=sys.stderr)
-        sys.exit(1)
+        print('usage: tsubame example.com', file=sys.stderr)
+        return 1
     sk_args = (socket.AF_INET,
                socket.SOCK_RAW,
                socket.getprotobyname('icmp'))
-    host = socket.getaddrinfo(sys.argv[1],
-                              None,
-                              *sk_args)[0][4][0]
+
+    try:
+        host = socket.getaddrinfo(sys.argv[1],
+                                  None,
+                                  *sk_args)[0][4][0]
+    except Exception as e:
+        print('could not resolve the target host: %s' % e, file=sys.stderr)
+        return 1
     hop_limit = 32
     count = 3
     print('traceroute to %s (%s), %s hops max' %
           (sys.argv[1], host, hop_limit))
-    results = traceroute().probe(host, hop_limit, count)
+    try:
+        results = traceroute().probe(host, hop_limit, count)
+    except Exception as e:
+        print('an error occurred while sending probe packets: %s' % e, file=sys.stderr)
+        return 1
     reached = False
     no_reply = '*'
     for ttl, seq_results in enumerate(results):
@@ -172,11 +177,11 @@ def main():
         prev_addr = None
         for result in seq_results:
             addr = no_reply
-            if result != None:
+            if result is not None:
                 addr, delay, reached = result
-            if prev_addr != None and addr != prev_addr:
+            if prev_addr is not None and addr != prev_addr:
                 print('\n   ', end='')
-            if addr == None:
+            if addr is None:
                 addr = no_reply
             if prev_addr != addr or addr == no_reply:
                 print(' %s' % addr, end='')
@@ -185,10 +190,11 @@ def main():
                       end='')
             prev_addr = addr
         print('')
-        if reached == True:
+        if reached is True:
             break
+
+    return 0
 
 
 if __name__ == '__main__':
-    main()
-
+    sys.exit(main())
